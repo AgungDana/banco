@@ -2,8 +2,8 @@ package service
 
 import (
 	"banco/common/config"
-	"banco/domain/artikel"
-	"banco/domain/artikel/manager"
+	"banco/domain/article"
+	"banco/domain/article/manager"
 )
 
 type Service interface {
@@ -18,5 +18,5 @@ func NewServiceArticle(conf config.Config) Service {
 }
 
 type service struct {
-	m artikel.ArticleManager
+	m article.ArticleManager
 }

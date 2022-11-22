@@ -12,8 +12,8 @@ func DbCon(conf config.Config) (*gorm.DB, error) {
 	var dsn string
 	switch conf.Driver {
 	case "mysql":
-		dsn = conf.UserName + ":" + conf.Password + "@tcp(" + conf.Host + ":" + conf.Port + ")/" + conf.DbName + "?parseTime=true&loc=local"
-		db, err := gorm.Open(mysql.Open(dsn))
+		dsn = conf.UserName + ":" + conf.Password + "@tcp(" + conf.Host + ":" + conf.Port + ")/" + conf.DbName + "?parseTime=True&loc=Local"
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		if err != nil {
 			return nil, err
 		}

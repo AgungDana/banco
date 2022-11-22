@@ -28,9 +28,9 @@ func init() {
 	}
 	host := os.Getenv("DBHOST")
 	port := os.Getenv("DBPORT")
-	dbName := os.Getenv("DBUSERNAME")
-	userName := os.Getenv("DBPASSWORD")
-	password := os.Getenv("DBNAME")
+	dbName := os.Getenv("DBNAME")
+	userName := os.Getenv("DBUSERNAME")
+	password := os.Getenv("DBPASSWORD")
 	driver := os.Getenv("DBDRIVER")
 	address := os.Getenv("ADDRESS")
 	imagePath := os.Getenv("IMAGEPATH")

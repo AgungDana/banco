@@ -3,12 +3,12 @@ package repo
 import (
 	"banco/common/config"
 	"banco/common/infra/orm"
-	"banco/domain/artikel"
+	"banco/domain/article"
 
 	"gorm.io/gorm"
 )
 
-func NewRepoArticle(conf config.Config) artikel.ArticleRepo {
+func NewRepoArticle(conf config.Config) article.ArticleRepo {
 	db, err := orm.DbCon(conf)
 	if err != nil {
 		panic(err)
@@ -23,7 +23,7 @@ type repo struct {
 }
 
 // Create implements artikel.ArticleRepo
-func (*repo) Create(artikel.Artikel) (*string, error) {
+func (*repo) Create(article.Artikel) (*string, error) {
 	panic("unimplemented")
 }
 
@@ -38,6 +38,6 @@ func (*repo) Read(string) (*string, error) {
 }
 
 // Update implements artikel.ArticleRepo
-func (*repo) Update(artikel.Artikel) (*string, error) {
+func (*repo) Update(article.Artikel) (*string, error) {
 	panic("unimplemented")
 }

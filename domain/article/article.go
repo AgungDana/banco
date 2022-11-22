@@ -1,10 +1,10 @@
-package artikel
+package article
 
 import "context"
 
 type ArticleManager interface {
 	GetArticle(ctx context.Context, id string) (*Artikel, error)
-	GetListArticle(ctx context.Context, id string) (*Artikel, error)
+	GetListArticle(ctx context.Context) (*Artikel, error)
 }
 
 type ArticleRepo interface {
