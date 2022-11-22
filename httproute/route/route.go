@@ -1,27 +1,48 @@
 package route
 
 import (
-	"banco/httproute/route/service"
+	"banco/httproute/service"
 
 	"github.com/gin-gonic/gin"
 )
 
-type ArticleRoute struct {
-	s service.Service
-	r *gin.Engine
+type route struct {
+	s service.Serv
+	g *gin.Engine
 }
 
-func NewAritcleRoute(s service.Service, r *gin.Engine) *gin.Engine {
-	a := ArticleRoute{
+func NewRoute(s service.Serv, g *gin.Engine) {
+	a := route{
 		s: s,
-		r: r,
+		g: g,
 	}
+	a.auth()
+	a.articelRoute()
+	a.noAuth()
+}
+func (r *route) articelRoute() {
 
-	a.r.GET("get_article", a.GetArticle)
-
-	return a.r
+}
+func (r *route) auth() {
+	//sedikit paham
+	r.g.GET("get_user", func(ctx *gin.Context) {
+		val := ctx.GetHeader("Authorization")
+		if val == "" {
+			ctx.JSON(400, gin.H{
+				"messages": "need auth",
+			})
+			ctx.Abort()
+			return
+		}
+	},
+		func(ctx *gin.Context) {
+			ctx.JSON(200, gin.H{
+				"messages": "successs",
+			})
+		})
 }
 
-func (a *ArticleRoute) GetArticle(c *gin.Context) {
-
+func (r *route) noAuth() {
+	r.g.POST("get_article", r.s.GetArticle)
+	r.g.GET("get_list_article", r.s.GetListArticle)
 }

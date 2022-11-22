@@ -3,13 +3,14 @@ package article
 import "context"
 
 type ArticleManager interface {
-	GetArticle(ctx context.Context, id string) (*Artikel, error)
-	GetListArticle(ctx context.Context) (*Artikel, error)
+	GetArticle(ctx context.Context, id uint) (*ArticleResponse, error)
+	GetListArticle(ctx context.Context) ([]*ArticleResponse, error)
 }
 
 type ArticleRepo interface {
-	Create(Artikel) (*string, error)
-	Read(string) (*string, error)
-	Update(Artikel) (*string, error)
-	Delete(string) (*string, error)
+	Create(Artikel) (*uint, error)
+	FindById(uint) (*Artikel, error)
+	FindAll() ([]*Artikel, error)
+	Update(Artikel) (*uint, error)
+	Delete(uint) error
 }

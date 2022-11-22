@@ -1,6 +1,16 @@
 package restsvr
 
-import "banco/common/werror"
+import (
+	"banco/common/werror"
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
+
+var (
+	SUCCES = "success"
+	FAILED = "failed"
+)
 
 type ErrorResponse struct {
 	Code    string
@@ -14,15 +24,46 @@ type Repsonse struct {
 	Errors []ErrorResponse
 }
 
-func (r *Repsonse) ErrorFromWerror(errs error) ErrorResponse {
-	err := ErrorResponse{}
+func errFromWerror(err werror.Error) ErrorResponse {
+	return ErrorResponse{
+		Code:    err.Code,
+		Message: err.Message,
+		Detail:  err.Detail,
+	}
+}
+
+func (r *Repsonse) generatedError(errs error) {
+	err := []ErrorResponse{}
 	switch e := errs.(type) {
 	case werror.Error:
-		err = ErrorResponse{
-			Code:    e.Code,
-			Message: e.Message,
-			Detail:  e.Detail,
+		err = append(err, errFromWerror(e))
+	case werror.Errors:
+		for _, v := range e.Errors {
+			err = append(err, errFromWerror(v))
 		}
+	case error:
+		err = append(err, ErrorResponse{
+			Message: e.Error(),
+		})
+	default:
+		fmt.Println("invalid error")
 	}
-	return err
+
+	r.Errors = err
+}
+
+func (r *Repsonse) Add(data any, err error) {
+	r.Status = SUCCES
+	if data == nil {
+		r.Status = FAILED
+	}
+	if err != nil {
+		r.generatedError(err)
+	}
+
+	r.Data = data
+}
+
+func CreateResponse(c *gin.Context, res *Repsonse) {
+	c.JSON(200, res)
 }

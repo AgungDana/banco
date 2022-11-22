@@ -23,21 +23,26 @@ type repo struct {
 }
 
 // Create implements artikel.ArticleRepo
-func (*repo) Create(article.Artikel) (*string, error) {
+func (*repo) Create(article.Artikel) (*uint, error) {
 	panic("unimplemented")
 }
 
 // Delete implements artikel.ArticleRepo
-func (*repo) Delete(string) (*string, error) {
+func (*repo) Delete(uint) error {
 	panic("unimplemented")
 }
 
 // Read implements artikel.ArticleRepo
-func (*repo) Read(string) (*string, error) {
+func (*repo) FindById(uint) (*article.Artikel, error) {
+	panic("unimplemented")
+}
+
+// Read implements artikel.ArticleRepo
+func (*repo) FindAll() ([]*article.Artikel, error) {
 	panic("unimplemented")
 }
 
 // Update implements artikel.ArticleRepo
-func (*repo) Update(article.Artikel) (*string, error) {
+func (*repo) Update(article.Artikel) (*uint, error) {
 	panic("unimplemented")
 }

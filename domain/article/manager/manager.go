@@ -16,11 +16,11 @@ type manager struct {
 }
 
 // GetArticle implements artikel.article
-func (*manager) GetArticle(ctx context.Context, id string) (*article.Artikel, error) {
+func (*manager) GetArticle(ctx context.Context, id uint) (*article.ArticleResponse, error) {
 	panic("unimplemented")
 }
 
 // GetListArticle implements artikel.ArticleManager
-func (*manager) GetListArticle(ctx context.Context) (*article.Artikel, error) {
+func (*manager) GetListArticle(ctx context.Context) ([]*article.ArticleResponse, error) {
 	panic("unimplemented")
 }
