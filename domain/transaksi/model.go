@@ -22,7 +22,19 @@ type TransactionDetail struct {
 	AmountId      int
 	DiscountId    int
 	Discount      int
-	TotalItem     int
 	Amount        int
+	TotalItem     int
 	Cost          int
+}
+
+type Amount struct {
+	orm.Model
+	ProductId int
+	SatuanId  int
+	Cost      int
+}
+
+type Satuan struct {
+	orm.Model
+	Name string
 }

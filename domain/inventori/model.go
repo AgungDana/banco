@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Inventori struct {
+type Inventory struct {
 	orm.Model
 	ProductTypeId int
 	ProductType   produk.ProductType
@@ -14,6 +14,7 @@ type Inventori struct {
 	OutcomingItem int
 	Stock         int
 	Balance       int
+	SatuanId      int
 }
 
 type HistoryOutcomingItem struct {
