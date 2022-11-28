@@ -4,6 +4,7 @@ import "context"
 
 type ArticleManager interface {
 	GetArticle(ctx context.Context, id uint) (*ArticleResponse, error)
+	// GetArticle(ctx context.Context) (*Artikel, error)
 	GetListArticle(ctx context.Context) ([]*ArticleResponse, error)
 }
 

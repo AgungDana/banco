@@ -17,9 +17,11 @@ func NewRoute(s service.Serv, g *gin.Engine) {
 		g: g,
 	}
 	a.auth()
-	a.articelRoute()
+	a.articelRoute() //new
 	a.noAuth()
 }
+
+//new
 func (r *route) articelRoute() {
 
 }

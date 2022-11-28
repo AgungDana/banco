@@ -7,10 +7,10 @@ import (
 
 type Artikel struct {
 	orm.Model
-	Title     string
-	Deskripsi string
-	TimeStart time.Time
-	TimeEnd   time.Time
+	Title       string
+	Description string
+	TimeStart   time.Time
+	TimeEnd     time.Time
 }
 
 func (*Artikel) TableName() string {
@@ -22,9 +22,9 @@ type ArticleRequest struct {
 }
 
 type ArticleResponse struct {
-	Id        uint
-	Title     string
-	Deskripsi string
-	TimeStart time.Time
-	TimeEnd   time.Time
+	Id          uint
+	Title       string
+	Description string
+	TimeStart   time.Time
+	TimeEnd     time.Time
 }
