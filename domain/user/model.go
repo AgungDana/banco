@@ -4,10 +4,14 @@ import "banco/common/infra/orm"
 
 type User struct {
 	orm.Model
-	Name     string
-	Email    string
-	Password string
-	Address  string
+	Name       string
+	Email      string
+	Password   string
+	CountryId  int
+	ProvinceId int
+	CityId     int
+	DistrictId int
+	Address    string
 }
 
 type Country struct {

@@ -28,10 +28,15 @@ func (s *service) GetArticle(c *gin.Context) {
 	)
 	c.ShouldBindJSON(&req)
 	defer restsvr.CreateResponse(c, res)
-	// data, err := s.m.GetArticle(c)
 	data, err := s.m.GetArticle(c, req.ArticleId)
 	res.Add(data, err)
 }
 
-func (a *service) GetListArticle(c *gin.Context) {
+func (s *service) GetListArticle(c *gin.Context) {
+
+	res := new(restsvr.Repsonse)
+
+	defer restsvr.CreateResponse(c, res)
+	data, err := s.m.GetListArticle(c)
+	res.Add(data, err)
 }

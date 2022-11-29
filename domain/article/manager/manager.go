@@ -5,6 +5,7 @@ import (
 	"banco/domain/article"
 	"banco/domain/article/repo"
 	"context"
+	"fmt"
 )
 
 func NewManager(conf config.Config) article.ArticleManager {
@@ -36,6 +37,23 @@ func (m *manager) GetArticle(ctx context.Context, id uint) (*article.ArticleResp
 // 	panic("unimplemented")
 // }
 // GetListArticle implements artikel.ArticleManager
-func (*manager) GetListArticle(ctx context.Context) ([]*article.ArticleResponse, error) {
-	panic("unimplemented")
+func (m *manager) GetListArticle(ctx context.Context) ([]*article.ArticleResponse, error) {
+	fmt.Println("Get List Article")
+	data, err := m.r.FindAll()
+	if err != nil {
+		fmt.Println("failed get list article")
+		return nil, err
+	}
+
+	res := []*article.ArticleResponse{}
+	for _, v := range data {
+		res = append(res, &article.ArticleResponse{
+			Id:          v.Id,
+			Title:       v.Title,
+			Description: v.Description,
+			TimeStart:   v.TimeStart,
+			TimeEnd:     v.TimeEnd,
+		})
+	}
+	return res, nil
 }

@@ -9,9 +9,9 @@ type ArticleManager interface {
 }
 
 type ArticleRepo interface {
-	Create(Artikel) (*uint, error)
-	FindById(uint) (*Artikel, error)
-	FindAll() ([]*Artikel, error)
-	Update(Artikel) (*uint, error)
+	Create(Article) (*uint, error)
+	FindById(uint) (*Article, error)
+	FindAll() ([]*Article, error)
+	Update(Article) (*uint, error)
 	Delete(uint) error
 }

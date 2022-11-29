@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Artikel struct {
+type Article struct {
 	orm.Model
 	Title       string
 	Description string
@@ -13,7 +13,7 @@ type Artikel struct {
 	TimeEnd     time.Time
 }
 
-func (*Artikel) TableName() string {
+func (*Article) TableName() string {
 	return "artikel"
 }
 

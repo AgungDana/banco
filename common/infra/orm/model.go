@@ -9,7 +9,9 @@ import (
 type Model struct {
 	Id        uint `gorm:"primarykey"`
 	CreatedAt time.Time
+	CraetedBy uint
 	UpdatedAt time.Time
-	UpdatedBy string
+	UpdatedBy uint
 	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedBy uint
 }

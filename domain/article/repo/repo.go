@@ -3,7 +3,11 @@ package repo
 import (
 	"banco/common/config"
 	"banco/common/infra/orm"
+	"banco/common/werror"
 	"banco/domain/article"
+	"errors"
+	"strconv"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -23,26 +27,51 @@ type repo struct {
 }
 
 // Create implements artikel.ArticleRepo
-func (*repo) Create(article.Artikel) (*uint, error) {
+func (r *repo) Create(article.Article) (*uint, error) {
 	panic("unimplemented")
 }
 
 // Delete implements artikel.ArticleRepo
-func (*repo) Delete(uint) error {
-	panic("unimplemented")
+func (r *repo) Delete(i uint) error {
+	// err := r.db.Where("where id = ?", i).Delete(&article.Artikel{Model: orm.Model{Id: i}}).Error
+	err := r.db.Delete(&article.Article{}, i).Error
+	if err != nil {
+		err = werror.Error{
+			Code: "INTERNAL SERVER ERROR", Message: "error delete article", Detail: map[string]string{"error": err.Error(), "id": strconv.Itoa(int(i))},
+		}
+		return err
+	}
+	return nil
 }
 
 // Read implements artikel.ArticleRepo
-func (*repo) FindById(uint) (*article.Artikel, error) {
-	panic("unimplemented")
+func (r *repo) FindById(i uint) (*article.Article, error) {
+	data := article.Article{}
+	err := r.db.Where("id = ? AND time_start >= ? AND time_end =< ?", i, time.Now(), time.Now()).Find(&data).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("not found")
+		}
+		return nil, err
+	}
+	return &data, err
+
 }
 
 // Read implements artikel.ArticleRepo
-func (*repo) FindAll() ([]*article.Artikel, error) {
-	panic("unimplemented")
+func (r *repo) FindAll() ([]*article.Article, error) {
+	data := []*article.Article{}
+	err := r.db.Find(&data).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("not found")
+		}
+		return nil, err
+	}
+	return data, err
 }
 
 // Update implements artikel.ArticleRepo
-func (*repo) Update(article.Artikel) (*uint, error) {
+func (r *repo) Update(article.Article) (*uint, error) {
 	panic("unimplemented")
 }
