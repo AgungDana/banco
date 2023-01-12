@@ -4,20 +4,42 @@ Authorization: agunganjg
 
 
 ###
-POST http://127.0.0.1:8080/get_article
+POST http://127.0.0.1:8080/get-article
 
 {
     "articleId" : 1
 }
 
 ###
-GET http://127.0.0.1:8080/get_list_article
+GET http://127.0.0.1:8080/get-list-article
 
 
 
 ###
-POST http://127.0.0.1:8080/hallo
+POST http://127.0.0.1:8080/register
 
 {
-
+    "name" : "agung",
+    "email" : "agung@gmail.com",
+    "password" : "password",
+    "address" : "Maron"
 }
+
+
+###
+POST http://127.0.0.1:8080/login
+
+{
+    "email" : "rpl.tio33@gmail.com",
+    "password" : "password"
+}
+
+###
+GET http://127.0.0.1:8080/profile
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiO…DAifQ.YYKLV_7a45MAKoDSHOVmvkMjaa1EQuqdWiZbHGlmALk
+
+{
+    "email" : "rpl.tio33@gmail.com",
+    "password" : "password"
+}
+

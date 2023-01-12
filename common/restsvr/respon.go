@@ -3,6 +3,7 @@ package restsvr
 import (
 	"banco/common/werror"
 	"fmt"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,15 +14,15 @@ var (
 )
 
 type ErrorResponse struct {
-	Code    string
-	Message string
-	Detail  map[string]string
+	Code    string            `json:"code,omitempty"`
+	Message string            `json:"message,omitempty"`
+	Detail  map[string]string `json:"detail,omitempty"`
 }
 
 type Repsonse struct {
-	Status string
-	Data   interface{}
-	Errors []ErrorResponse
+	Status string          `json:"status,omitempty"`
+	Data   interface{}     `json:"data,omitempty"`
+	Errors []ErrorResponse `json:"errors,omitempty"`
 }
 
 func errFromWerror(err werror.Error) ErrorResponse {
@@ -54,7 +55,7 @@ func (r *Repsonse) generatedError(errs error) {
 
 func (r *Repsonse) Add(data any, err error) {
 	r.Status = SUCCES
-	if data == nil {
+	if data == nil || reflect.ValueOf(data).IsNil() {
 		r.Status = FAILED
 	}
 	if err != nil {
@@ -65,5 +66,6 @@ func (r *Repsonse) Add(data any, err error) {
 }
 
 func CreateResponse(c *gin.Context, res *Repsonse) {
+	// c.JSON(200, res)
 	c.JSON(200, res)
 }

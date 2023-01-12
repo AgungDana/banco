@@ -12,14 +12,15 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewRepoArticle(conf config.Config) article.ArticleRepo {
+//no mutex
+func NewRepoArticle(conf config.Config) (article.ArticleRepo, error) {
 	db, err := orm.DbCon(conf)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &repo{
 		db: db,
-	}
+	}, nil
 }
 
 type repo struct {
@@ -27,27 +28,32 @@ type repo struct {
 }
 
 // Create implements artikel.ArticleRepo
-func (r *repo) Create(article.Article) (*uint, error) {
-	panic("unimplemented")
+func (r *repo) Create(in article.Article) (*uint, error) {
+	//create article from input
+	err := r.db.Model(article.Article{}).Create(in).Error
+	if err != nil {
+		return nil, err
+	}
+	return &in.Id, nil
 }
 
 // Delete implements artikel.ArticleRepo
-func (r *repo) Delete(i uint) error {
-	// err := r.db.Where("where id = ?", i).Delete(&article.Artikel{Model: orm.Model{Id: i}}).Error
+func (r *repo) DeleteById(i uint) (*uint, error) {
+
 	err := r.db.Delete(&article.Article{}, i).Error
 	if err != nil {
-		err = werror.Error{
+		err = werror.Error{ //custom error
 			Code: "INTERNAL SERVER ERROR", Message: "error delete article", Detail: map[string]string{"error": err.Error(), "id": strconv.Itoa(int(i))},
 		}
-		return err
+		return nil, err
 	}
-	return nil
+	return &i, nil
 }
 
 // Read implements artikel.ArticleRepo
 func (r *repo) FindById(i uint) (*article.Article, error) {
 	data := article.Article{}
-	err := r.db.Where("id = ? AND time_start >= ? AND time_end =< ?", i, time.Now(), time.Now()).Find(&data).Error
+	err := r.db.Where("id = ? AND time_start >= ? AND time_end <= ?", i, time.Now(), time.Now()).Find(&data).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("not found")
@@ -61,17 +67,27 @@ func (r *repo) FindById(i uint) (*article.Article, error) {
 // Read implements artikel.ArticleRepo
 func (r *repo) FindAll() ([]*article.Article, error) {
 	data := []*article.Article{}
-	err := r.db.Find(&data).Error
+	err := r.db.Where("time_start >= ? AND time_end <= ?", time.Now(), time.Now()).Find(&data).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("not found")
 		}
 		return nil, err
 	}
-	return data, err
+	if len(data) == 0 {
+		return nil, errors.New("not found")
+	}
+	return data, nil
 }
 
 // Update implements artikel.ArticleRepo
-func (r *repo) Update(article.Article) (*uint, error) {
-	panic("unimplemented")
+func (r *repo) Update(in article.Article) (*uint, error) {
+	err := r.db.Model(article.Article{}).Updates(in).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("not found")
+		}
+		return nil, err
+	}
+	return &in.Id, nil
 }

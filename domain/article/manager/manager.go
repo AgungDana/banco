@@ -2,24 +2,72 @@ package manager
 
 import (
 	"banco/common/config"
+	"banco/common/ctxutil"
 	"banco/domain/article"
 	"banco/domain/article/repo"
 	"context"
 	"fmt"
+	"log"
 )
 
-func NewManager(conf config.Config) article.ArticleManager {
-	r := repo.NewRepoArticle(conf)
-	return &manager{r: r}
+func NewArticleManager(conf config.Config) article.ArticleManager {
+	r, err := repo.NewRepoArticle(conf)
+	if err != nil {
+		// panic(err)
+		log.Fatal(err)
+		return nil
+	}
+	return &manager{
+		repo: r,
+	}
 }
 
 type manager struct {
-	r article.ArticleRepo
+	repo article.ArticleRepo
+}
+
+// CreateArticle implements article.ArticleManager
+func (m *manager) CreateArticle(ctx context.Context, in article.CreateArticleRequest) (*article.ArticleResponse, error) {
+	payload, _ := ctxutil.GetUserPayloadFromCtx(ctx)
+	id, err := m.repo.Create(in.NewArticle(payload.UserID))
+	if err != nil {
+		return nil, err
+	}
+
+	data, err := m.repo.FindById(*id)
+	if err != nil {
+		return nil, err
+	}
+	return article.ToResponse(data), nil
+}
+
+// DeleteArticle implements article.ArticleManager
+func (m *manager) DeleteArticle(ctx context.Context, in article.ArticleRequest) (*uint, error) {
+	id, err := m.repo.DeleteById(in.ArticleId)
+	if err != nil {
+		return nil, err
+	}
+	return id, nil
+}
+
+// UpdateArticle implements article.ArticleManager
+func (m *manager) UpdateArticle(ctx context.Context, in article.UpdateArticleRequest) (*article.ArticleResponse, error) {
+	payload, _ := ctxutil.GetUserPayloadFromCtx(ctx)
+	id, err := m.repo.Update(in.ChangeArticle(payload.UserID))
+	if err != nil {
+		return nil, err
+	}
+
+	data, err := m.repo.FindById(*id)
+	if err != nil {
+		return nil, err
+	}
+	return article.ToResponse(data), nil
 }
 
 // GetArticle implements artikel.article
-func (m *manager) GetArticle(ctx context.Context, id uint) (*article.ArticleResponse, error) {
-	data, err := m.r.FindById(id)
+func (m *manager) GetArticle(ctx context.Context, in uint) (*article.ArticleResponse, error) {
+	data, err := m.repo.FindById(in)
 	if err != nil {
 		return nil, err
 	}
@@ -32,14 +80,9 @@ func (m *manager) GetArticle(ctx context.Context, id uint) (*article.ArticleResp
 	}, nil
 }
 
-// GetArticle implements artikel.article
-// func (*manager) GetArticle(ctx context.Context) (*article.Artikel, error) {
-// 	panic("unimplemented")
-// }
 // GetListArticle implements artikel.ArticleManager
 func (m *manager) GetListArticle(ctx context.Context) ([]*article.ArticleResponse, error) {
-	fmt.Println("Get List Article")
-	data, err := m.r.FindAll()
+	data, err := m.repo.FindAll()
 	if err != nil {
 		fmt.Println("failed get list article")
 		return nil, err
