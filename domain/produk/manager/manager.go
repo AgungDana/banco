@@ -273,7 +273,7 @@ func (m *manager) UpdateProduct(ctx context.Context, p produk.UpdateProductReque
 	// panic("unimplemented")
 	userId, _ := ctxutil.GetUserIdFromCtx(ctx)
 	mutation := m.repo.NewMutation(ctx)
-	product := produk.UpdateProduct(p, *userId)
+	product := produk.UpdateProductt(p, *userId)
 	query := m.repo.NewQuery()
 	id, err := mutation.UpdateProduct(ctx, product)
 	if err != nil {

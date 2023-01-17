@@ -4,18 +4,18 @@ import "banco/common/infra/orm"
 
 type Product struct {
 	orm.Model
-	ProductTypeId uint        `json:"productTypeId,omitempty"`
-	Image         string      `json:"image,omitempty"`
-	ProductType   ProductType `json:"productType,omitempty"`
-	SpecificType  string      `json:"specificType,omitempty"`
-	Description   string      `json:"description,omitempty"`
+	ProductTypeId uint         `json:"productTypeId,omitempty"`
+	Image         string       `json:"image,omitempty"`
+	ProductType   *ProductType `json:"productType,omitempty"`
+	SpecificType  string       `json:"specificType,omitempty"`
+	Description   string       `json:"description,omitempty"`
 }
 
 type CreateProductRequest struct {
-	ProductTypeId uint        `json:"productTypeId,omitempty"`
-	ProductType   ProductType `json:"productType,omitempty"`
-	SpecificType  string      `json:"specificType,omitempty"`
-	Description   string      `json:"description,omitempty"`
+	ProductTypeId uint         `json:"productTypeId,omitempty"`
+	ProductType   *ProductType `json:"productType,omitempty"`
+	SpecificType  string       `json:"specificType,omitempty"`
+	Description   string       `json:"description,omitempty"`
 }
 
 func NewProduct(req CreateProductRequest, userId uint) Product {
@@ -31,16 +31,17 @@ func NewProduct(req CreateProductRequest, userId uint) Product {
 }
 
 type UpdateProductRequest struct {
-	ProductTypeId uint        `json:"productTypeId,omitempty"`
-	ProductType   ProductType `json:"productType,omitempty"`
-	SpecificType  string      `json:"specificType,omitempty"`
-	Description   string      `json:"description,omitempty"`
+	Id            uint         `json:"id,omitempty"`
+	ProductTypeId uint         `json:"productTypeId,omitempty"`
+	ProductType   *ProductType `json:"productType,omitempty"`
+	SpecificType  string       `json:"specificType,omitempty"`
+	Description   string       `json:"description,omitempty"`
 }
 
-func UpdateProduct(req UpdateProductRequest, userId uint) Product {
+func UpdateProductt(req UpdateProductRequest, userId uint) Product {
 	return Product{
 		Model: orm.Model{
-			Id:        req.ProductTypeId,
+			Id:        req.Id,
 			UpdatedBy: userId,
 		},
 		ProductTypeId: req.ProductTypeId,

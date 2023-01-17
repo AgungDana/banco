@@ -137,7 +137,7 @@ GET http://127.0.0.1:8080/delete-produk-article
 
 //=================produkType=================
 ###
-POST http://127.0.0.1:8080/get-produk-type
+POST http://127.0.0.1:8080/get-produk
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
 
 {
@@ -165,10 +165,11 @@ PUT http://127.0.0.1:8080/update-produk
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
 
 {
+    "id" : 1,
     "productTypeId" : 1,
-    "productType" : 1,
-    "specificType" : "update spesifik type",
-    "description" : "Deskripsi dari produk"
+    //"productType" : 1,
+    "specificType" : "Pisang",
+    "description" : "Deskripsi dari produk hahahah"
 }
 
 ###
