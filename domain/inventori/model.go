@@ -8,29 +8,27 @@ import (
 
 type Inventory struct {
 	orm.Model
-	ProductId     uint
-	Product       produk.Product
-	IncomingItem  int
-	OutcomingItem int
-	Stock         int
-	Balance       int
-	SatuanId      int
+	ProductId     uint           `json:"productId,omitempty"`
+	Product       produk.Product `json:"product,omitempty"`
+	IncomingItem  int            `json:"incomingItem,omitempty"`
+	OutcomingItem int            `json:"outcomingItem,omitempty"`
+	Stock         int            `json:"stock,omitempty"`
+	Balance       int            `json:"balance,omitempty"`
+	SatuanId      int            `json:"satuanId,omitempty"`
 }
 
 type CreateRequest struct {
-	ProductId    uint
-	IncomingItem int
-	Stock        int
-	SatuanId     int
+	ProductId    uint `json:"productId,omitempty"`
+	IncomingItem int  `json:"incomingItem,omitempty"`
+	SatuanId     int  `json:"satuanId,omitempty"`
 }
 
 type InventoryIncreaseRequest struct {
 	Id           uint `gorm:"primarykey" json:"id,omitempty"`
-	ProductId    uint
-	IncomingItem int
-	Stock        int
-	Balance      int
-	SatuanId     int
+	ProductId    uint `json:"productId,omitempty"`
+	IncomingItem int  `json:"incomingItem,omitempty"`
+	Balance      int  `json:"balance,omitempty"`
+	SatuanId     int  `json:"satuanId,omitempty"`
 }
 
 func IncreaseReqToInventory(req InventoryIncreaseRequest) Inventory {
@@ -40,7 +38,6 @@ func IncreaseReqToInventory(req InventoryIncreaseRequest) Inventory {
 		},
 		ProductId:    req.ProductId,
 		IncomingItem: req.IncomingItem,
-		Stock:        req.Stock,
 		Balance:      req.Balance,
 		SatuanId:     req.SatuanId,
 	}
@@ -48,11 +45,10 @@ func IncreaseReqToInventory(req InventoryIncreaseRequest) Inventory {
 
 type InventoryDecreaseRequest struct {
 	Id            uint `gorm:"primarykey" json:"id,omitempty"`
-	ProductId     uint
-	OutcomingItem int
-	Stock         int
-	Balance       int
-	SatuanId      int
+	ProductId     uint `json:"productId,omitempty"`
+	OutcomingItem int  `json:"outcomingItem,omitempty"`
+	Balance       int  `json:"balance,omitempty"`
+	SatuanId      int  `json:"satuanId,omitempty"`
 }
 
 func DecreaseReqToInventory(req InventoryDecreaseRequest) Inventory {
@@ -62,7 +58,6 @@ func DecreaseReqToInventory(req InventoryDecreaseRequest) Inventory {
 		},
 		ProductId:     req.ProductId,
 		OutcomingItem: req.OutcomingItem,
-		Stock:         req.Stock,
 		Balance:       req.Balance,
 		SatuanId:      req.SatuanId,
 	}
@@ -70,16 +65,16 @@ func DecreaseReqToInventory(req InventoryDecreaseRequest) Inventory {
 
 type IncomingItem struct {
 	orm.Model
-	TransactionId uint
-	ProductId     int
-	TotalItem     int
-	Date          time.Time
+	TransactionId uint      `json:"transactionId,omitempty"`
+	ProductId     int       `json:"productId,omitempty"`
+	TotalItem     int       `json:"totalItem,omitempty"`
+	Date          time.Time `json:"date,omitempty"`
 }
 
 type HistoryOutcomingItem struct {
 	orm.Model
-	TransactionId uint
-	ProductId     int
-	TotalItem     int
-	Date          time.Time
+	TransactionId uint      `json:"transactionId,omitempty"`
+	ProductId     int       `json:"productId,omitempty"`
+	TotalItem     int       `json:"totalItem,omitempty"`
+	Date          time.Time `json:"date,omitempty"`
 }

@@ -9,6 +9,7 @@ import (
 	"banco/domain/user/repo"
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"time"
 )
@@ -22,6 +23,40 @@ func NewUserManager(conf config.Config) user.Manager {
 
 type UserManager struct {
 	repo user.Repo
+}
+
+// GetListCity implements user.Manager
+func (m *UserManager) GetListCity(ctx context.Context, req uint) ([]*user.City, error) {
+	// panic("unimplemented")
+	query := m.repo.NewQuery()
+	data, err := query.FindCities(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return data, err
+}
+
+// GetListDistrict implements user.Manager
+func (m *UserManager) GetListDistrict(ctx context.Context, req uint) ([]*user.District, error) {
+	// panic("unimplemented")
+	query := m.repo.NewQuery()
+	data, err := query.FindDistricts(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return data, err
+}
+
+// GetListProvince implements user.Manager
+func (m *UserManager) GetListProvince(ctx context.Context, req uint) ([]*user.Province, error) {
+	// panic("unimplemented")
+	query := m.repo.NewQuery()
+	data, err := query.FindProvinces(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+
 }
 
 // CreateUser implements user.Manager
@@ -106,13 +141,16 @@ func (m *UserManager) FindUserByID(ctx context.Context) (*user.Profile, error) {
 
 	id, _ := ctxutil.GetUserIdFromCtx(ctx)
 	if id == nil {
+		fmt.Println("hahahaha")
 		return nil, errors.New("internal server error")
 	}
 
 	data, err := query.FindUserByID(ctx, *id)
 	if err != nil {
+		fmt.Println("hihihihi")
 		return nil, err
 	}
+	fmt.Println("huhuhuhuhu")
 	profile := user.ToProfile(*data)
 	return &profile, nil
 }
@@ -141,8 +179,9 @@ func (m *UserManager) UpdateUserByEmail(ctx context.Context, req user.UpdateUser
 }
 
 // UpdateUserById implements user.Manager
-func (m *UserManager) UpdateUserById(ctx context.Context, req user.UpdateUserRequest) (*uint, error) {
+func (m *UserManager) UpdateUserById(ctx context.Context, req user.UpdateUserRequest) (*user.Profile, error) {
 	mutation := m.repo.NewMutation(ctx)
+	query := m.repo.NewQuery()
 
 	id, _ := ctxutil.GetUserIdFromCtx(ctx)
 	if id == nil {
@@ -160,5 +199,7 @@ func (m *UserManager) UpdateUserById(ctx context.Context, req user.UpdateUserReq
 	if err = mutation.Commit(ctx); err != nil {
 		return nil, err
 	}
-	return data, nil
+	profile, err := query.FindUserByID(ctx, *data)
+	result := user.ToProfile(*profile)
+	return &result, err
 }

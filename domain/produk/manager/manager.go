@@ -2,6 +2,7 @@ package manager
 
 import (
 	"banco/common/config"
+	"banco/common/ctxutil"
 	"banco/domain/produk"
 	"banco/domain/produk/repo"
 	"context"
@@ -45,11 +46,13 @@ func (m *manager) CreateAmout(ctx context.Context, a produk.Amount) (*produk.Amo
 }
 
 // CreateProduct implements produk.Manager
-func (m *manager) CreateProduct(ctx context.Context, p produk.Product) (*produk.Product, error) {
+func (m *manager) CreateProduct(ctx context.Context, p produk.CreateProductRequest) (*produk.Product, error) {
 	// panic("unimplemented")
+	userId, _ := ctxutil.GetUserIdFromCtx(ctx)
 	mutation := m.repo.NewMutation(ctx)
+	product := produk.NewProduct(p, *userId)
 	query := m.repo.NewQuery()
-	id, err := mutation.CreateProduct(ctx, p)
+	id, err := mutation.CreateProduct(ctx, product)
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)
@@ -266,11 +269,13 @@ func (m *manager) UpdateAmout(ctx context.Context, a produk.Amount) (*produk.Amo
 }
 
 // UpdateProduct implements produk.Manager
-func (m *manager) UpdateProduct(ctx context.Context, p produk.Product) (*produk.Product, error) {
+func (m *manager) UpdateProduct(ctx context.Context, p produk.UpdateProductRequest) (*produk.Product, error) {
 	// panic("unimplemented")
+	userId, _ := ctxutil.GetUserIdFromCtx(ctx)
 	mutation := m.repo.NewMutation(ctx)
+	product := produk.UpdateProduct(p, *userId)
 	query := m.repo.NewQuery()
-	id, err := mutation.UpdateProduct(ctx, p)
+	id, err := mutation.UpdateProduct(ctx, product)
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)

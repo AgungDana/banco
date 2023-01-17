@@ -37,6 +37,7 @@ func (c *CreateArticleRequest) NewArticle(createdBy uint) Article {
 }
 
 type UpdateArticleRequest struct {
+	Id          uint      `json:"id,omitempty"`
 	Title       string    `json:"title,omitempty"`
 	Description string    `json:"description,omitempty"`
 	TimeStart   time.Time `json:"timeStart,omitempty"`
@@ -46,6 +47,7 @@ type UpdateArticleRequest struct {
 func (c *UpdateArticleRequest) ChangeArticle(updatedBy uint) Article {
 	return Article{
 		Model: orm.Model{
+			Id:        c.Id,
 			UpdatedBy: updatedBy,
 		},
 		Title:       c.Title,

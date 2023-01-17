@@ -1,13 +1,97 @@
-GET http://127.0.0.1:8080/get_user
-Authorization: agunganjg
-
-
-
+//=================login=================
 ###
-POST http://127.0.0.1:8080/get-article
+POST http://127.0.0.1:8080/register
 
 {
-    "articleId" : 1
+    "name" : "agung",
+    //"countryId" : "agung@gmail.com",
+    //"provinceId" : "agung@gmail.com",
+    //"cityId" : "agung@gmail.com",
+    "email" : "agung12@gmail.com",
+    "password" : "password",
+    "address" : "Maron"
+}
+###
+POST http://127.0.0.1:8080/login
+
+{
+    //"email" : "ainunrofiq7@gmail.com",
+    //"password" : "030600"
+    "email":"dana@gmail.com",
+    "password":"p"
+}
+
+###
+GET http://127.0.0.1:8080/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+###
+PUT http://127.0.0.1:8080/update-profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "name" : "agung",
+    "countryId" : 1,
+    "provinceId" : 11,
+    "cityId" : 1101,
+    "districtId" : 1101010,
+    "email" : "agung12@gmail.com",
+    "password" : "password",
+    "address" : "Maron"
+}
+//=================artikel=================
+###
+POST http://127.0.0.1:8080/create-article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "title" : "Persyaratan tumbuh tanaman kelapa",
+    "description" : "Tanaman kelapa dapat tumbuh dengan optimal pada daerah dengan curah hujan 1.300 sampai dengan 2.300 mm per-tahun, tetapi tanaman tetap dapat tumbuh meski curah hujan di daerah penanaman mencapai 3.800 mm per-tahun asalkan drainase tanah baik."
+}
+
+###
+POST http://127.0.0.1:8080/update-article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id" : 1,
+    "title" : "Daging Buah Kelapa",
+    "description" : "Dijadikan santan untuk membuat sayur, soto, gulai, rendang, dan ragam hidangan lain. Dapat dikerok, diparut, dan dikeringkan menjadi bahan baku makanan ringan dan minuman. Menghilangkan kerutan di wajah dan mengurangi tumit pecah-pecah."
+}
+
+###
+POST http://127.0.0.1:8080/delete-article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+# {
+#     "id" : 1,
+#     "title" : "Daging Buah Kelapa",
+#     "description" : "Dijadikan santan untuk membuat sayur, soto, gulai, rendang, dan ragam hidangan lain. Dapat dikerok, diparut, dan dikeringkan menjadi bahan baku makanan ringan dan minuman. Menghilangkan kerutan di wajah dan mengurangi tumit pecah-pecah."
+# }
+{
+    "articleId" : 8
+}
+
+###
+POST http://127.0.0.1:8080/get-list-province
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id" : 1
+}
+###
+POST http://127.0.0.1:8080/get-list-city
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id" : 11
+}
+###
+POST http://127.0.0.1:8080/get-list-district
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id" : 1101
 }
 
 ###
@@ -15,31 +99,131 @@ GET http://127.0.0.1:8080/get-list-article
 
 
 
+//=================produk=================
 ###
-POST http://127.0.0.1:8080/register
+POST http://127.0.0.1:8080/get-produk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
 
 {
-    "name" : "agung",
-    "email" : "agung@gmail.com",
-    "password" : "password",
-    "address" : "Maron"
+    "id" : 1
+}
+
+###
+GET http://127.0.0.1:8080/get-list-produk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+###
+POST http://127.0.0.1:8080/create-produk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+
+{
+    "id" : 1,
+    "title" : "Daging Buah Kelapa",
+    "description" : "Dijadikan santan untuk membuat sayur, soto, gulai, rendang, dan ragam hidangan lain. Dapat dikerok, diparut, dan dikeringkan menjadi bahan baku makanan ringan dan minuman. Menghilangkan kerutan di wajah dan mengurangi tumit pecah-pecah."
 }
 
 
 ###
-POST http://127.0.0.1:8080/login
+POST http://127.0.0.1:8080/update-produk
 
 {
-    "email" : "rpl.tio33@gmail.com",
-    "password" : "password"
+    "articleId" : 1
 }
 
 ###
-GET http://127.0.0.1:8080/profile
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiO…DAifQ.YYKLV_7a45MAKoDSHOVmvkMjaa1EQuqdWiZbHGlmALk
+GET http://127.0.0.1:8080/delete-produk-article
+
+
+//=================produkType=================
+###
+POST http://127.0.0.1:8080/get-produk-type
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
 
 {
-    "email" : "rpl.tio33@gmail.com",
-    "password" : "password"
+    "id" : 1
 }
 
+###
+GET http://127.0.0.1:8080/get-list-produk-type
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+###
+POST http://127.0.0.1:8080/create-produk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+
+{
+    "id" : 1,
+    "title" : "Daging Buah Kelapa",
+    "description" : "Dijadikan santan untuk membuat sayur, soto, gulai, rendang, dan ragam hidangan lain. Dapat dikerok, diparut, dan dikeringkan menjadi bahan baku makanan ringan dan minuman. Menghilangkan kerutan di wajah dan mengurangi tumit pecah-pecah."
+}
+
+
+###
+PUT http://127.0.0.1:8080/update-produk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "productTypeId" : 1,
+    "productType" : 1,
+    "specificType" : "update spesifik type",
+    "description" : "Deskripsi dari produk"
+}
+
+###
+GET http://127.0.0.1:8080/delete-produk-article
+
+
+###
+POST http://127.0.0.1:8080/create-total
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "ProductId":3,
+    "SatuanId":3, 
+    "Cost":25000    
+}
+###
+POST http://127.0.0.1:8080/get-total
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id":3
+}
+
+
+###
+POST http://127.0.0.1:8080/add-inventory
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "productId": 1,
+    "incomingItem": 10,
+    "satuanId": 2    
+}
+
+###
+POST http://127.0.0.1:8080/increase-inventory
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id":4,
+    "productId": 2,
+    "incomingItem": 10,
+    "satuanId": 1    
+}
+
+###
+POST http://127.0.0.1:8080/decrease-inventory
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsIkVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJJc3N1ZWRBdCI6IjIwMjMtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCIsIkV4cGlyZWRBdCI6IjIwMjQtMDEtMTRUMTg6MjA6MTQuMzI3NDk5OCswNzowMCJ9.3hFDx0U0lipR-yA3xxVQ4ASHm8mQkyhEkdDgQI5Hme8
+
+{
+    "id":4,
+    "productId": 2,
+    "outcomingItem": 10,
+    "satuanId": 1    
+}
+
+
+//Create Transaksi  

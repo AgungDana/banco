@@ -4,11 +4,14 @@ import "context"
 
 type Manager interface {
 	CreateUser(ctx context.Context, req CreateUserRequest) (*uint, error)
-	UpdateUserById(ctx context.Context, req UpdateUserRequest) (*uint, error)
+	UpdateUserById(ctx context.Context, req UpdateUserRequest) (*Profile, error)
 	UpdateUserByEmail(ctx context.Context, req UpdateUserRequest) (*uint, error)
 	FindUserByID(ctx context.Context) (*Profile, error)
 	Login(ctx context.Context, req LoginRequest) (*LoginResponse, error)
 	DeleteUser(ctx context.Context) (*uint, error)
+	GetListProvince(ctx context.Context, req uint) ([]*Province, error)
+	GetListCity(ctx context.Context, req uint) ([]*City, error)
+	GetListDistrict(ctx context.Context, req uint) ([]*District, error)
 }
 
 type Repo interface {
@@ -29,4 +32,7 @@ type Mutation interface {
 type Query interface {
 	FindUserByID(ctx context.Context, id uint) (*User, error)
 	FindUserByEmail(ctx context.Context, email string) (*User, error)
+	FindProvinces(ctx context.Context, id uint) ([]*Province, error)
+	FindCities(ctx context.Context, id uint) ([]*City, error)
+	FindDistricts(ctx context.Context, id uint) ([]*District, error)
 }

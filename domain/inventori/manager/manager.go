@@ -6,6 +6,7 @@ import (
 	"banco/common/infra/orm"
 	"banco/domain/inventori"
 	"banco/domain/inventori/repo"
+	"fmt"
 
 	"context"
 )
@@ -69,8 +70,30 @@ func (m *manager) AddProductToInventory(ctx context.Context, req inventori.Creat
 	}
 
 	mut := m.repo.NewMutation(ctx)
-	if data != nil {
-		stock := data.Stock + req.Stock
+	if data.Id == 0 {
+		fmt.Println("new")
+		add := inventori.Inventory{
+			Model: orm.Model{
+				CraetedBy: *id,
+			},
+			ProductId:    req.ProductId,
+			IncomingItem: req.IncomingItem,
+			Stock:        req.IncomingItem,
+			SatuanId:     req.SatuanId,
+		}
+		data, err := mut.AddProductToInventory(ctx, add)
+		fmt.Println(err)
+		if err != nil {
+			mut.Cancel(ctx)
+			return nil, err
+		}
+		if err = mut.Commit(ctx); err != nil {
+			return nil, err
+		}
+		return data, nil
+	} else {
+		fmt.Println("update")
+		stock := data.Stock + req.IncomingItem
 		incoming := data.IncomingItem + req.IncomingItem
 
 		add := inventori.Inventory{
@@ -82,23 +105,12 @@ func (m *manager) AddProductToInventory(ctx context.Context, req inventori.Creat
 			SatuanId:     req.SatuanId,
 		}
 		data, err := mut.UpdateInventory(ctx, add)
+		fmt.Println(err)
 		if err != nil {
+			mut.Cancel(ctx)
 			return nil, err
 		}
-		return data, nil
-	} else {
-		add := inventori.Inventory{
-			Model: orm.Model{
-				Id:        data.Id,
-				CraetedBy: *id,
-			},
-			ProductId:    req.ProductId,
-			IncomingItem: req.IncomingItem,
-			Stock:        req.Stock,
-			SatuanId:     req.SatuanId,
-		}
-		data, err := mut.AddProductToInventory(ctx, add)
-		if err != nil {
+		if err = mut.Commit(ctx); err != nil {
 			return nil, err
 		}
 		return data, nil
@@ -121,7 +133,7 @@ func (m *manager) IncreaseProductInInventory(ctx context.Context, inve inventori
 	req := inventori.IncreaseReqToInventory(inve)
 
 	req.UpdatedBy = *id
-	req.Stock = req.Stock + data.Stock
+	req.Stock = req.IncomingItem + data.Stock
 	req.IncomingItem = req.IncomingItem + data.IncomingItem
 
 	mut := m.repo.NewMutation(ctx)
@@ -153,7 +165,7 @@ func (m *manager) DecreaseProductInInventory(ctx context.Context, inve inventori
 	req := inventori.DecreaseReqToInventory(inve)
 
 	req.UpdatedBy = *id
-	req.Stock = data.Stock - req.Stock
+	req.Stock = data.Stock - req.OutcomingItem
 	req.OutcomingItem = req.OutcomingItem + data.OutcomingItem
 
 	mut := m.repo.NewMutation(ctx)

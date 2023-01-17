@@ -52,4 +52,10 @@ type Service interface {
 	CreateSatuan(c *gin.Context)
 	UpdateSatuan(c *gin.Context)
 	DeleteSatuan(c *gin.Context)
+
+	GetListProvince(c *gin.Context)
+	GetListCities(c *gin.Context)
+	GetListDistrict(c *gin.Context)
+
+	SaveProductImage(c *gin.Context)
 }

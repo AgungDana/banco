@@ -5,6 +5,7 @@ import "banco/common/infra/orm"
 type Product struct {
 	orm.Model
 	ProductTypeId uint        `json:"productTypeId,omitempty"`
+	Image         string      `json:"image,omitempty"`
 	ProductType   ProductType `json:"productType,omitempty"`
 	SpecificType  string      `json:"specificType,omitempty"`
 	Description   string      `json:"description,omitempty"`
@@ -17,8 +18,11 @@ type CreateProductRequest struct {
 	Description   string      `json:"description,omitempty"`
 }
 
-func NewProduct(req CreateProductRequest) Product {
+func NewProduct(req CreateProductRequest, userId uint) Product {
 	return Product{
+		Model: orm.Model{
+			CraetedBy: userId,
+		},
 		ProductTypeId: req.ProductTypeId,
 		ProductType:   req.ProductType,
 		SpecificType:  req.SpecificType,
@@ -33,11 +37,11 @@ type UpdateProductRequest struct {
 	Description   string      `json:"description,omitempty"`
 }
 
-func UpdateProduct(req UpdateProductRequest, id uint) Product {
+func UpdateProduct(req UpdateProductRequest, userId uint) Product {
 	return Product{
 		Model: orm.Model{
 			Id:        req.ProductTypeId,
-			UpdatedBy: id,
+			UpdatedBy: userId,
 		},
 		ProductTypeId: req.ProductTypeId,
 		ProductType:   req.ProductType,
@@ -59,8 +63,11 @@ type CreateProductTypeRequest struct {
 	Desccriptions string    `json:"desccriptions,omitempty"`
 }
 
-func NewProductType(req CreateProductTypeRequest) ProductType {
+func NewProductType(req CreateProductTypeRequest, userId uint) ProductType {
 	return ProductType{
+		Model: orm.Model{
+			CraetedBy: userId,
+		},
 		Type:          req.Type,
 		Product:       req.Product,
 		Desccriptions: req.Desccriptions,
@@ -88,18 +95,20 @@ func UpdateProductType(req UpdateProductTypeRequest, id uint) ProductType {
 
 type ProductDiscount struct {
 	orm.Model
-	DiscountId uint
-	ProductId  uint
+	DiscountId uint `json:"discountId,omitempty"`
+	ProductId  uint `json:"productId,omitempty"`
 }
 
 type CreateProductDiscountRequest struct {
-	DiscountId uint
-	ProductId  uint
+	DiscountId uint `json:"discountId,omitempty"`
+	ProductId  uint `json:"productId,omitempty"`
 }
 
-func NewProductDiscount(req CreateProductDiscountRequest) ProductDiscount {
+func NewProductDiscount(req CreateProductDiscountRequest, userId uint) ProductDiscount {
 	return ProductDiscount{
-		// Model:      orm.Model{},
+		Model: orm.Model{
+			CraetedBy: userId,
+		},
 		DiscountId: req.DiscountId,
 		ProductId:  req.ProductId,
 	}

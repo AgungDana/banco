@@ -6,8 +6,8 @@ import (
 	"banco/common/werror"
 	"banco/domain/article"
 	"errors"
+	"fmt"
 	"strconv"
-	"time"
 
 	"gorm.io/gorm"
 )
@@ -30,7 +30,8 @@ type repo struct {
 // Create implements artikel.ArticleRepo
 func (r *repo) Create(in article.Article) (*uint, error) {
 	//create article from input
-	err := r.db.Model(article.Article{}).Create(in).Error
+	fmt.Printf("in: %v\n", in)
+	err := r.db.Model(article.Article{}).Create(&in).Error
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +54,7 @@ func (r *repo) DeleteById(i uint) (*uint, error) {
 // Read implements artikel.ArticleRepo
 func (r *repo) FindById(i uint) (*article.Article, error) {
 	data := article.Article{}
-	err := r.db.Where("id = ? AND time_start >= ? AND time_end <= ?", i, time.Now(), time.Now()).Find(&data).Error
+	err := r.db.Where("id = ?", i).Find(&data).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("not found")
@@ -67,7 +68,8 @@ func (r *repo) FindById(i uint) (*article.Article, error) {
 // Read implements artikel.ArticleRepo
 func (r *repo) FindAll() ([]*article.Article, error) {
 	data := []*article.Article{}
-	err := r.db.Where("time_start >= ? AND time_end <= ?", time.Now(), time.Now()).Find(&data).Error
+	// err := r.db.Where("time_start >= ? AND time_end <= ?", time.Now(), time.Now()).Find(&data).Error
+	err := r.db.Find(&data).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("not found")
@@ -75,14 +77,14 @@ func (r *repo) FindAll() ([]*article.Article, error) {
 		return nil, err
 	}
 	if len(data) == 0 {
-		return nil, errors.New("not found")
+		return nil, errors.New("not foundd")
 	}
 	return data, nil
 }
 
 // Update implements artikel.ArticleRepo
 func (r *repo) Update(in article.Article) (*uint, error) {
-	err := r.db.Model(article.Article{}).Updates(in).Error
+	err := r.db.Model(article.Article{}).Where("id = ?", in.Id).Updates(in).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("not found")

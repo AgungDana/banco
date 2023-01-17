@@ -5,8 +5,8 @@ import "context"
 type Manager interface {
 	GetProduct(ctx context.Context, id uint) (*Product, error)
 	GetProducts(ctx context.Context) ([]*Product, error)
-	CreateProduct(ctx context.Context, p Product) (*Product, error)
-	UpdateProduct(ctx context.Context, p Product) (*Product, error)
+	CreateProduct(ctx context.Context, p CreateProductRequest) (*Product, error)
+	UpdateProduct(ctx context.Context, p UpdateProductRequest) (*Product, error)
 	DeleteProduct(ctx context.Context, id uint) (*uint, error)
 
 	GetProductType(ctx context.Context, id uint) (*ProductType, error)

@@ -4,6 +4,7 @@ import (
 	"banco/common/infra/orm"
 	"banco/domain/inventori"
 	"context"
+	"fmt"
 	"sync"
 
 	"gorm.io/gorm"
@@ -40,6 +41,7 @@ func (m *mutation) Commit(ctx context.Context) error {
 
 // AddProductToInventory implements inventori.Mutation
 func (m *mutation) AddProductToInventory(ctx context.Context, inve inventori.Inventory) (*uint, error) {
+	fmt.Printf("inve: %v\n", inve)
 	err := m.txn.Model(inventori.Inventory{}).Create(&inve).Error
 	if err != nil {
 		return nil, err
@@ -53,7 +55,7 @@ func (m *mutation) UpdateInventory(ctx context.Context, inve inventori.Inventory
 	if err != nil {
 		return nil, err
 	}
-	return nil, err
+	return &inve.Id, nil
 }
 
 // DeleteProductFromInventory implements inventori.Mutation
