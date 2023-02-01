@@ -122,6 +122,9 @@ func (m *manager) DeleteAmout(ctx context.Context, id uint) (*uint, error) {
 		mutation.Cancel(ctx)
 		return nil, err
 	}
+	if err = mutation.Commit(ctx); err != nil {
+		return nil, err
+	}
 	return data, nil
 
 }
@@ -134,6 +137,9 @@ func (m *manager) DeleteProduct(ctx context.Context, id uint) (*uint, error) {
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)
+		return nil, err
+	}
+	if err = mutation.Commit(ctx); err != nil {
 		return nil, err
 	}
 	return data, nil
@@ -150,6 +156,9 @@ func (m *manager) DeleteProductType(ctx context.Context, id uint) (*uint, error)
 		mutation.Cancel(ctx)
 		return nil, err
 	}
+	if err = mutation.Commit(ctx); err != nil {
+		return nil, err
+	}
 	return data, nil
 
 }
@@ -162,6 +171,9 @@ func (m *manager) DeleteSatuan(ctx context.Context, id uint) (*uint, error) {
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)
+		return nil, err
+	}
+	if err = mutation.Commit(ctx); err != nil {
 		return nil, err
 	}
 	return data, nil
@@ -261,6 +273,9 @@ func (m *manager) UpdateAmout(ctx context.Context, a produk.Amount) (*produk.Amo
 		mutation.Cancel(ctx)
 		return nil, err
 	}
+	if err = mutation.Commit(ctx); err != nil {
+		return nil, err
+	}
 	data, err := query.FindAmount(ctx, *id)
 	if err != nil {
 		return nil, err
@@ -279,6 +294,9 @@ func (m *manager) UpdateProduct(ctx context.Context, p produk.UpdateProductReque
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)
+		return nil, err
+	}
+	if err = mutation.Commit(ctx); err != nil {
 		return nil, err
 	}
 	data, err := query.FindProduct(ctx, *id)
@@ -300,6 +318,9 @@ func (m *manager) UpdateProductType(ctx context.Context, p produk.ProductType) (
 		mutation.Cancel(ctx)
 		return nil, err
 	}
+	if err = mutation.Commit(ctx); err != nil {
+		return nil, err
+	}
 	data, err := query.FindProductType(ctx, *id)
 	if err != nil {
 		return nil, err
@@ -316,6 +337,9 @@ func (m *manager) UpdateSatuan(ctx context.Context, s produk.Satuan) (*produk.Sa
 	if err != nil {
 		log.Println(err)
 		mutation.Cancel(ctx)
+		return nil, err
+	}
+	if err = mutation.Commit(ctx); err != nil {
 		return nil, err
 	}
 	data, err := query.FindSatuan(ctx, *id)
